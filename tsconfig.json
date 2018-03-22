@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "module": "es6",
+        "target": "es6",
+        "lib": ["es6", "dom"],
+        "jsx": "react",
+        "allowJs": true,
+        "moduleResolution": "node",
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noImplicitAny": true,
+        "noUnusedLocals": true,
+        "sourceMap": true,
+        "forceConsistentCasingInFileNames": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "strictNullChecks": true,
+        "baseUrl": "src",
+        "typeRoots" : ["node_modules/@types"],
+        "paths": {
+            "@routes/*": ["routes/*"],
+            "@shared/*": ["shared/*"],
+            "@static/*": ["static/*"],
+            "@layouts/*": ["layouts/*"]
+        }
+    }
+}

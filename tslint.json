@@ -1,0 +1,49 @@
+{
+    "extends": [
+        "tslint:latest",
+        "tslint-react",
+        "tslint-config-airbnb"
+    ],
+    "rules": {
+        "indent": [
+            true,
+            "spaces",
+            4
+        ],
+        "import-name": false,
+        "jsx-boolean-value": false,
+        "max-line-length": [
+            true,
+            180
+        ],
+        "no-implicit-dependencies": false,
+        "no-increment-decrement": false,
+        "no-submodule-imports": [
+            true,
+            "@layouts",
+            "@model",
+            "@route",
+            "@shared",
+            "@static",
+            "next",
+            "bootstrap"
+        ],
+        "object-literal-sort-keys": [
+            true,
+            "match-declaration-order"
+        ],
+        "object-shorthand-properties-first": false,
+        "prefer-for-of": false,
+        "ter-indent": [
+            true,
+            4
+        ],
+        "triple-equals": false,
+        "variable-name": [
+            true,
+            "ban-keywords",
+            "check-format",
+            "allow-pascal-case"
+        ]
+    }
+}

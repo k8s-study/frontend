@@ -1,0 +1,12 @@
+@import 'now-ui-dashboard';
+
+/* customizing */
+.form-group.no-border .form-control + .input-group-addon,
+.input-group.no-border .form-control + .input-group-addon {
+    margin-left: 0;
+    border-radius: 0 30px 30px 0;
+}
+
+.main-panel div > .content {
+    min-height: calc(100vh - 175px);
+}
