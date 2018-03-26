@@ -28,10 +28,7 @@
             "next",
             "bootstrap"
         ],
-        "object-literal-sort-keys": [
-            true,
-            "match-declaration-order"
-        ],
+        "object-literal-sort-keys": false,
         "object-shorthand-properties-first": false,
         "prefer-for-of": false,
         "ter-indent": [

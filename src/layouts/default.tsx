@@ -17,9 +17,11 @@ interface ILayoutsDefaultProps {
 let ps: PerfectScrollbar;
 
 export default class LayoutDefault extends React.Component<ILayoutsDefaultProps, {}> {
+    private mainPanelNode: HTMLDivElement | null;
+
     public componentDidMount() {
         if (navigator.platform.indexOf('Win') > -1) {
-            ps = new PerfectScrollbar(this.refs.mainPanel);
+            ps = new PerfectScrollbar(this.mainPanelNode!);
             document.body.classList.toggle('perfect-scrollbar-on');
         }
     }
@@ -43,7 +45,7 @@ export default class LayoutDefault extends React.Component<ILayoutsDefaultProps,
                     <link rel="stylesheet" href="/_next/static/style.css" />
                 </Head>
                 <Sidebar routes={sidebarRoutes} url={this.props.url} />
-                <div className="main-panel" ref="mainPanel">
+                <div className="main-panel" ref={node => this.mainPanelNode = node}>
                     <Header {...this.props} />
                     <div>{this.props.children}</div>
                     <Footer fluid />
