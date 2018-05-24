@@ -1,6 +1,6 @@
 import { ISidebarRouteItem } from '@routes/sidebar';
 import Link from 'next/link';
-import { SingletonRouter } from 'next/router';
+import { SingletonRouter, withRouter } from 'next/router';
 import PerfectScrollbar from 'perfect-scrollbar';
 import * as React from 'react';
 import { Nav } from 'reactstrap';
@@ -9,16 +9,15 @@ import { Nav } from 'reactstrap';
 import logo from '@static/logo/logo-white.svg';
 
 interface ISidebarProps {
-    url: SingletonRouter;
     routes: ISidebarRouteItem[];
 }
 
 let ps: PerfectScrollbar;
 
-class Sidebar extends React.Component<ISidebarProps, {}> {
+class Sidebar extends React.Component<ISidebarProps & { router: SingletonRouter }, {}> {
     private sidebarWrapperNode: HTMLDivElement | null;
 
-    constructor(props: ISidebarProps) {
+    constructor(props: ISidebarProps & { router: SingletonRouter }) {
         super(props);
     }
     public componentDidMount() {
@@ -66,8 +65,8 @@ class Sidebar extends React.Component<ISidebarProps, {}> {
         ));
     }
     private isActiveRoute(routeName: string) {
-        return this.props.url.pathname == routeName ? 'active' : '';
+        return this.props.router.pathname == routeName ? 'active' : '';
     }
 }
 
-export default Sidebar;
+export default withRouter(Sidebar);

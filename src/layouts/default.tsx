@@ -11,7 +11,6 @@ import '@static/scss/now-ui-dashboard-custom.scss';
 
 interface ILayoutsDefaultProps {
     title?: string;
-    url: SingletonRouter;
 }
 
 let ps: PerfectScrollbar;
@@ -44,9 +43,9 @@ export default class LayoutDefault extends React.Component<ILayoutsDefaultProps,
                     <title>{this.props.title || ''}</title>
                     <link rel="stylesheet" href="/_next/static/style.css" />
                 </Head>
-                <Sidebar routes={sidebarRoutes} url={this.props.url} />
+                <Sidebar routes={sidebarRoutes} />
                 <div className="main-panel" ref={node => this.mainPanelNode = node}>
-                    <Header {...this.props} />
+                    <Header />
                     <div>{this.props.children}</div>
                     <Footer fluid />
                 </div>

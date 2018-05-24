@@ -20,11 +20,14 @@
         "no-increment-decrement": false,
         "no-submodule-imports": [
             true,
+            "@common",
             "@layouts",
             "@model",
+            "@redux",
             "@route",
             "@shared",
             "@static",
+            "@util",
             "next",
             "bootstrap"
         ],

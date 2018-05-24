@@ -6,7 +6,7 @@
 
 ```
 $ yarn install
-$ yarn run dev
+$ yarn dev
 ```
 
 ### docker build

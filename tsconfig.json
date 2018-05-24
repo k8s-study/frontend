@@ -17,10 +17,13 @@
         "baseUrl": "src",
         "typeRoots" : ["node_modules/@types"],
         "paths": {
+            "@common/*": ["common/*"],
+            "@redux/*": ["redux/*"],
             "@routes/*": ["routes/*"],
             "@shared/*": ["shared/*"],
             "@static/*": ["static/*"],
-            "@layouts/*": ["layouts/*"]
+            "@layouts/*": ["layouts/*"],
+            "@util/*": ["util/*"]
         }
     }
 }

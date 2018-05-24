@@ -1,6 +1,6 @@
 import sidebarRoutes from '@routes/sidebar';
 import Link from 'next/link';
-import { SingletonRouter } from 'next/router';
+import { SingletonRouter, withRouter } from 'next/router';
 import * as React from 'react';
 import {
     Collapse, Container, Dropdown, DropdownItem, DropdownMenu, DropdownToggle,
@@ -8,9 +8,7 @@ import {
     Nav, Navbar, NavbarBrand, NavbarToggler, NavItem,
 } from 'reactstrap';
 
-interface IHeaderProps {
-    url: SingletonRouter;
-}
+interface IHeaderProps {}
 
 interface IHeaderState {
     isOpen: boolean;
@@ -18,10 +16,10 @@ interface IHeaderState {
     color: string;
 }
 
-class Header extends React.Component<IHeaderProps, IHeaderState> {
+class Header extends React.Component<IHeaderProps & { router: SingletonRouter }, IHeaderState> {
     private sidebarToggleNode: HTMLButtonElement | null;
 
-    constructor(props: IHeaderProps) {
+    constructor(props: IHeaderProps & { router: SingletonRouter }) {
         super(props);
         this.state = {
             isOpen: false,
@@ -35,8 +33,8 @@ class Header extends React.Component<IHeaderProps, IHeaderState> {
     public componentDidMount() {
         window.addEventListener('resize', this.updateColor.bind(this));
     }
-    public componentDidUpdate(prevProps: IHeaderProps) {
-        if (window.innerWidth < 993 && prevProps.url.pathname !== this.props.url.pathname && document.documentElement.className.indexOf('nav-open') !== -1) {
+    public componentDidUpdate(prevProps: IHeaderProps & { router: SingletonRouter }) {
+        if (window.innerWidth < 993 && prevProps.router.pathname !== this.props.router.pathname && document.documentElement.className.indexOf('nav-open') !== -1) {
             document.documentElement.classList.toggle('nav-open');
             if (this.sidebarToggleNode) {
                 this.sidebarToggleNode.classList.toggle('toggled');
@@ -142,7 +140,7 @@ class Header extends React.Component<IHeaderProps, IHeaderState> {
         }
     }
     private getBrand() {
-        const route = sidebarRoutes.find(r => r.path == this.props.url.pathname);
+        const route = sidebarRoutes.find(r => r.path == this.props.router.pathname);
         if (!route) {
             return null;
         }
@@ -163,4 +161,4 @@ class Header extends React.Component<IHeaderProps, IHeaderState> {
     }
 }
 
-export default Header;
+export default withRouter(Header);

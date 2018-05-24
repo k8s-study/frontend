@@ -11,10 +11,13 @@ module.exports = withCSS(withSass(withTypescript({
         config.resolve = {
             extensions: ['.js', '.jsx', '.ts', '.tsx'],
             alias: {
+                '@common': path.resolve(__dirname, 'src/common'),
+                '@redux': path.resolve(__dirname, 'src/redux'),
                 '@routes': path.resolve(__dirname, 'src/routes'),
                 '@shared': path.resolve(__dirname, 'src/shared'),
                 '@static': path.resolve(__dirname, 'src/static'),
                 '@layouts': path.resolve(__dirname, 'src/layouts'),
+                '@util': path.resolve(__dirname, 'src/util'),
             }
         };
         config.module.rules.push({

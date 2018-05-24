@@ -1,12 +1,12 @@
 import LayoutDefault from '@layouts/default';
 import { PanelHeader } from '@shared/now-ui-components';
 import * as React from 'react';
-import { Card, CardBody, CardHeader, Col, Row } from 'reactstrap';
+import { Card, CardHeader, Col, Row } from 'reactstrap';
 
 export default class PageReport extends React.Component<{}, {}> {
     public render() {
         return (
-            <LayoutDefault title="pongpong" url={this.props.url}>
+            <LayoutDefault title="pongpong">
                 <PanelHeader size="sm" />
                 <div className="content">
                     <Row>
