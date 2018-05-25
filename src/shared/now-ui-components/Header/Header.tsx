@@ -1,7 +1,9 @@
 import { ICurrentUser } from '@common/types';
+import { removeCurrentUser, setLoggedIn } from '@redux/store';
 import sidebarRoutes from '@routes/sidebar';
+import * as Cookies from 'js-cookie';
 import Link from 'next/link';
-import { SingletonRouter, withRouter } from 'next/router';
+import Router, { SingletonRouter, withRouter } from 'next/router';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import {
@@ -9,9 +11,12 @@ import {
     Input, InputGroup,
     Nav, Navbar, NavbarBrand, NavbarToggler, NavItem,
 } from 'reactstrap';
+import { bindActionCreators, Dispatch } from 'redux';
 
 interface IHeaderProps {
     currentUser?: ICurrentUser;
+    setLoggedIn: (loggedIn: boolean) => void;
+    removeCurrentUser: () => void;
 }
 
 interface IHeaderState {
@@ -33,6 +38,7 @@ class Header extends React.Component<IHeaderProps & { router: SingletonRouter },
         this.toggle = this.toggle.bind(this);
         this.dropdownToggle = this.dropdownToggle.bind(this);
         this.openSidebar = this.openSidebar.bind(this);
+        this.logout = this.logout.bind(this);
     }
     public componentDidMount() {
         window.addEventListener('resize', this.updateColor.bind(this));
@@ -91,27 +97,16 @@ class Header extends React.Component<IHeaderProps & { router: SingletonRouter },
                             </NavItem>
                             <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.dropdownToggle}>
                                 <DropdownToggle caret nav>
-                                    <i className="now-ui-icons location_world" />
+                                    <i className="now-ui-icons users_single-02" />
                                     <p>
-                                        <span className="d-lg-none d-md-block">Some Actions</span>
+                                        <span className="d-lg-none d-md-block">{this.props.currentUser ? this.props.currentUser.email : '-'}</span>
                                     </p>
                                 </DropdownToggle>
                                 <DropdownMenu right>
-                                    <DropdownItem tag="a">Action</DropdownItem>
-                                    <DropdownItem tag="a">Another Action</DropdownItem>
-                                    <DropdownItem tag="a">Something else here</DropdownItem>
+                                    <Link href="/profile"><DropdownItem tag="a">Profile</DropdownItem></Link>
+                                    <DropdownItem tag="a" onClick={this.logout}>Logout</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
-                            <NavItem>
-                                <Link href="#pablo">
-                                    <a className="nav-link">
-                                        <i className="now-ui-icons users_single-02" />
-                                        <p>
-                                            <span className="d-lg-none d-md-block">{this.props.currentUser ? this.props.currentUser.email : 'no'}</span>
-                                        </p>
-                                    </a>
-                                </Link>
-                            </NavItem>
                         </Nav>
                     </Collapse>
                 </Container>
@@ -161,7 +156,12 @@ class Header extends React.Component<IHeaderProps & { router: SingletonRouter },
                 color: 'transparent',
             });
         }
-
+    }
+    private logout() {
+        Cookies.remove('apiKey');
+        this.props.setLoggedIn(false);
+        this.props.removeCurrentUser();
+        Router.push('/login');
     }
 }
 
@@ -169,4 +169,13 @@ const mapStateToProps = (state: any) => ({
     currentUser: state.currentUser,
 });
 
-export default connect(mapStateToProps)(withRouter(Header));
+const mapDispatchToProps = (dispatch: Dispatch<any>) =>
+    bindActionCreators(
+        {
+            removeCurrentUser,
+            setLoggedIn,
+        },
+        dispatch,
+    );
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));

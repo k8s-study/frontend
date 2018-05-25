@@ -1,6 +1,6 @@
 import { client } from '@common/client';
 import LayoutEmpty from '@layouts/empty';
-import { LOGIN_REDUX_FORM } from '@redux/login';
+import { SIGNUP_REDUX_FORM } from '@redux/signup';
 import { removeCurrentUser, setCurrentUser, setLoggedIn } from '@redux/store';
 import { PanelHeader } from '@shared/now-ui-components';
 import * as Cookies from 'js-cookie';
@@ -12,29 +12,29 @@ import { Card, CardBody, CardHeader } from 'reactstrap';
 import { bindActionCreators, Dispatch } from 'redux';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 
-interface IPageLoginProps <FormData> extends InjectedFormProps<FormData> {}
+interface IPageSignupProps <FormData> extends InjectedFormProps<FormData> {}
 
-interface ILoginForm {
+interface ISignupForm {
     email: string;
     password: string;
 }
 
-class PageLogin extends React.Component<IPageLoginProps<ILoginForm>, {}> {
+class PageSignup extends React.Component<IPageSignupProps<ISignupForm>, {}> {
     public render() {
         const { handleSubmit } = this.props;
 
         return (
-            <LayoutEmpty title="pongpong | Login">
+            <LayoutEmpty title="pongpong | Signup">
                 <PanelHeader
                     content={
                         <div className="header text-center">
-                            <h2 className="title">Login</h2>
+                            <h2 className="title">Signup</h2>
                             <p className="category">
-                                SignIn or
-                                {' '}
-                                <Link href="/signup">
-                                    <a>SignUp</a>
+                                <Link href="/login">
+                                    <a>SignIn</a>
                                 </Link>
+                                {' '}
+                                or SignUp
                             </p>
                         </div>
                     }
@@ -44,7 +44,7 @@ class PageLogin extends React.Component<IPageLoginProps<ILoginForm>, {}> {
                         <div className="col-md-6 mx-auto">
                             <Card>
                                 <CardHeader>
-                                    <h5 className="title">Login</h5>
+                                    <h5 className="title">Signup</h5>
                                 </CardHeader>
                                 <CardBody>
                                     <form onSubmit={handleSubmit} role="form">
@@ -76,7 +76,7 @@ class PageLogin extends React.Component<IPageLoginProps<ILoginForm>, {}> {
                                         </div>
 
                                         <button className="btn btn-primary btn-block" type="submit">
-                                            Login
+                                            Signup
                                         </button>
                                     </form>
                                 </CardBody>
@@ -89,7 +89,7 @@ class PageLogin extends React.Component<IPageLoginProps<ILoginForm>, {}> {
     }
 }
 
-const validate = (val: ILoginForm) => {
+const validate = (val: ISignupForm) => {
     const errors: any = {};
 
     if (!val.email) {
@@ -103,16 +103,16 @@ const validate = (val: ILoginForm) => {
     return errors;
 };
 
-const onSubmit = async (val: ILoginForm, dispatch: Dispatch<any>, props: any) => {
+const onSubmit = async (val: ISignForm, dispatch: Dispatch<any>, props: any) => {
     try {
-        const result = (await client().post(`/user-service/v1/login`, val));
+        const result = (await client().post(`/user-service/v1/signup`, val));
         if (result.data.key) {
             Cookies.set('apiKey', result.data.key, { expires: 30 });
             props.setLoggedIn(true);
             props.setCurrentUser({ email: val.email });
             Router.push('/');
         } else {
-            alert('Login error');
+            alert('Signup error');
             props.setLoggedIn(false);
             props.removeCurrentUser();
         }
@@ -123,11 +123,11 @@ const onSubmit = async (val: ILoginForm, dispatch: Dispatch<any>, props: any) =>
     }
 };
 
-const PageLoginReduxForm = reduxForm({
-    form: LOGIN_REDUX_FORM,
+const PageSignupReduxForm = reduxForm({
+    form: SIGNUP_REDUX_FORM,
     validate,
     onSubmit,
-})(PageLogin);
+})(PageSignup);
 
 const mapStateToProps = (state: any) => ({});
 
@@ -141,4 +141,4 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) =>
         dispatch,
     );
 
-export default connect(mapStateToProps, mapDispatchToProps)(PageLoginReduxForm);
+export default connect(mapStateToProps, mapDispatchToProps)(PageSignupReduxForm);

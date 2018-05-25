@@ -1,0 +1,1 @@
+export const SIGNUP_REDUX_FORM = 'SIGNUP_FORM';
