@@ -12,13 +12,13 @@ $ yarn dev
 ### docker build
 
 ```
-$ docker build --force-rm=true -t subicura/k8s-frontend .
+$ docker build --force-rm=true -t subicura/k8s-study-frontend .
 ```
 
 ### docker run
 
 ```
-$ docker run -d -p 3000:3000 subicura/k8s-frontend
+$ docker run -d -p 3000:3000 subicura/k8s-study-frontend
 ```
 
 ### kubenetes run

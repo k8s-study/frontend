@@ -1,0 +1,68 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: frontend
+spec:
+  rules:
+  - host: pongpong.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: frontend
+          servicePort: 80
+  - host: www.pongpong.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: frontend
+          servicePort: 80
+---
+
+apiVersion: configuration.konghq.com/v1
+kind: KongIngress
+metadata:
+  name: frontend
+upstream:
+  service_upstream: true
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 3000
+  selector:
+    type: web
+    app: frontend
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: web
+      app: frontend
+      version: v1
+  template:
+    metadata:
+      labels:
+        type: web
+        app: frontend
+        version: v1
+    spec:
+      containers:
+        - name: frontend
+          image: subicura/k8s-study-frontend:0.1
+          ports:
+            - containerPort: 3000
+              protocol: TCP
