@@ -66,3 +66,18 @@ spec:
           ports:
             - containerPort: 3000
               protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - curl
+              - -f
+              - http://localhost:3000/health
+            periodSeconds: 5
+          livenessProbe:
+            exec:
+              command:
+              - curl
+              - -f
+              - http://localhost:3000/health
+            initialDelaySeconds: 10
+            periodSeconds: 5

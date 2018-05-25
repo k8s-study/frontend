@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "next src",
+    "dev": "node server.js",
     "build": "next build src",
-    "start": "next start src"
+    "start": "NODE_ENV=production node server.js"
   },
   "author": "subicura",
   "license": "MIT",
