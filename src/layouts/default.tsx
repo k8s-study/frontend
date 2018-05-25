@@ -1,7 +1,6 @@
 import sidebarRoutes from '@routes/sidebar';
 import { Footer, Header, Sidebar } from '@shared/now-ui-components';
 import Head from 'next/head';
-import { SingletonRouter } from 'next/router';
 import PerfectScrollbar from 'perfect-scrollbar';
 import * as React from 'react';
 
@@ -41,7 +40,6 @@ export default class LayoutDefault extends React.Component<ILayoutsDefaultProps,
             <div className="wrapper">
                 <Head>
                     <title>{this.props.title || ''}</title>
-                    <link rel="stylesheet" href="/_next/static/style.css" />
                 </Head>
                 <Sidebar routes={sidebarRoutes} />
                 <div className="main-panel" ref={node => this.mainPanelNode = node}>

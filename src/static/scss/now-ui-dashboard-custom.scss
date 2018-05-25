@@ -10,3 +10,10 @@
 .main-panel div > .content {
     min-height: calc(100vh - 175px);
 }
+
+.empty-layout {
+    .main-panel {
+        float: none;
+        width: 100%;
+    }
+}

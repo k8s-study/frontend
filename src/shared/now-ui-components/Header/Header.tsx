@@ -1,14 +1,18 @@
+import { ICurrentUser } from '@common/types';
 import sidebarRoutes from '@routes/sidebar';
 import Link from 'next/link';
 import { SingletonRouter, withRouter } from 'next/router';
 import * as React from 'react';
+import { connect } from 'react-redux';
 import {
     Collapse, Container, Dropdown, DropdownItem, DropdownMenu, DropdownToggle,
     Input, InputGroup,
     Nav, Navbar, NavbarBrand, NavbarToggler, NavItem,
 } from 'reactstrap';
 
-interface IHeaderProps {}
+interface IHeaderProps {
+    currentUser?: ICurrentUser;
+}
 
 interface IHeaderState {
     isOpen: boolean;
@@ -103,7 +107,7 @@ class Header extends React.Component<IHeaderProps & { router: SingletonRouter },
                                     <a className="nav-link">
                                         <i className="now-ui-icons users_single-02" />
                                         <p>
-                                            <span className="d-lg-none d-md-block">Account</span>
+                                            <span className="d-lg-none d-md-block">{this.props.currentUser ? this.props.currentUser.email : 'no'}</span>
                                         </p>
                                     </a>
                                 </Link>
@@ -161,4 +165,8 @@ class Header extends React.Component<IHeaderProps & { router: SingletonRouter },
     }
 }
 
-export default withRouter(Header);
+const mapStateToProps = (state: any) => ({
+    currentUser: state.currentUser,
+});
+
+export default connect(mapStateToProps)(withRouter(Header));

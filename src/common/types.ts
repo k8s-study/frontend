@@ -5,3 +5,7 @@ export interface IReduxContext<T> extends Context {
     store: Store<T>;
     isServer: boolean;
 }
+
+export interface ICurrentUser {
+    email: string;
+}

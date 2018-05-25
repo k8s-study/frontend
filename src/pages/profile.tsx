@@ -1,12 +1,19 @@
+import { ICurrentUser } from '@common/types';
 import LayoutDefault from '@layouts/default';
 import { PanelHeader } from '@shared/now-ui-components';
+import { IAuthProps, withAuth } from '@util/with-auth';
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { Card, CardHeader, Col, Row } from 'reactstrap';
 
-export default class PageProfile extends React.Component<{}, {}> {
+interface IPageProfile extends IAuthProps {
+    currentUser: ICurrentUser;
+}
+
+class PageProfile extends React.Component<IPageProfile, {}> {
     public render() {
         return (
-            <LayoutDefault title="pongpong">
+            <LayoutDefault title="pongpong | Profile">
                 <PanelHeader size="sm" />
                 <div className="content">
                     <Row>
@@ -23,3 +30,9 @@ export default class PageProfile extends React.Component<{}, {}> {
         );
     }
 }
+
+const mapStateToProps = (state: any) => ({
+    currentUser: state.currentUser,
+});
+
+export default connect(mapStateToProps)(withAuth(PageProfile));

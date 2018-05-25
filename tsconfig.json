@@ -18,6 +18,7 @@
         "typeRoots" : ["node_modules/@types"],
         "paths": {
             "@common/*": ["common/*"],
+            "@components/*": ["components/*"],
             "@redux/*": ["redux/*"],
             "@routes/*": ["routes/*"],
             "@shared/*": ["shared/*"],

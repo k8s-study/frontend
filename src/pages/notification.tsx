@@ -1,9 +1,11 @@
 import LayoutDefault from '@layouts/default';
 import { PanelHeader } from '@shared/now-ui-components';
+import { withAuth } from '@util/with-auth';
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { Card, CardHeader, Col, Row } from 'reactstrap';
 
-export default class PageNotification extends React.Component<{}, {}> {
+class PageNotification extends React.Component<{}, {}> {
     public render() {
         return (
             <LayoutDefault title="pongpong">
@@ -23,3 +25,5 @@ export default class PageNotification extends React.Component<{}, {}> {
         );
     }
 }
+
+export default connect()(withAuth(PageNotification));
