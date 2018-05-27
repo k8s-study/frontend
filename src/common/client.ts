@@ -3,7 +3,17 @@ import { IncomingMessage } from 'http';
 import * as Cookies from 'js-cookie';
 
 const DEFAULT_API_BASE_URL = 'http://api.pongpong.io';
+const DEFAULT_INTERNAL_API_BASE_URL = 'http://kong-proxy.kong';
 const ANONYMOUS_API_KEY = 'anonymous';
+
+/**
+ * 서버와 브라우져에서 호출할 때 도메인 주소를 따로 설정함
+ * 추후 istio 0.8 버전에서 개선 예정
+ * @param req request
+ */
+const getBaseUrl = (req?: IncomingMessage) => {
+    return req ? DEFAULT_INTERNAL_API_BASE_URL : DEFAULT_API_BASE_URL;
+};
 
 const getApiKey = (req?: IncomingMessage) => {
     let apiKey;
@@ -19,9 +29,11 @@ const getApiKey = (req?: IncomingMessage) => {
 };
 
 export const client = (req?: IncomingMessage) => {
-    axios.defaults.baseURL = DEFAULT_API_BASE_URL;
-    axios.defaults.headers = {
-        apiKey: getApiKey(req),
+    const opt = {
+        baseURL: getBaseUrl(req),
+        headers: {
+            apiKey: getApiKey(req),
+        },
     };
-    return axios;
+    return axios.create(opt);
 };
