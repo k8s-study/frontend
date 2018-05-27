@@ -62,7 +62,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: subicura/k8s-study-frontend:0.2
+          image: subicura/k8s-study-frontend:0.3
           ports:
             - containerPort: 3000
               protocol: TCP

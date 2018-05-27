@@ -20,6 +20,10 @@ interface ILoginForm {
 }
 
 class PageLogin extends React.Component<IPageLoginProps<ILoginForm>, {}> {
+    public componentDidMount() {
+        Cookies.remove('apiKey');
+    }
+
     public render() {
         const { handleSubmit } = this.props;
 

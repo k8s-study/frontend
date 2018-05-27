@@ -12,7 +12,7 @@ const ANONYMOUS_API_KEY = 'anonymous';
  * @param req request
  */
 const getBaseUrl = (req?: IncomingMessage) => {
-    return req ? DEFAULT_INTERNAL_API_BASE_URL : DEFAULT_API_BASE_URL;
+    return (req && process.env.NODE_ENV == 'production') ? DEFAULT_INTERNAL_API_BASE_URL : DEFAULT_API_BASE_URL;
 };
 
 const getApiKey = (req?: IncomingMessage) => {

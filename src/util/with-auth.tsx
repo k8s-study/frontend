@@ -14,21 +14,25 @@ export interface IAuthProps {
 
 export const withAuth = (WrappedComponent: React.ComponentType & INextComponentType) => {
     return class extends React.Component<any & IAuthProps, {}> {
-        public static async getInitialProps(ctx: Context): Promise<any> {
+        public static async getInitialProps(ctx: Context & IAuthProps): Promise<any> {
             let pageProps = {};
 
             if (WrappedComponent.getInitialProps) {
                 pageProps = await WrappedComponent.getInitialProps(ctx);
             }
 
-            return { pageProps };
-        }
-
-        public componentDidMount() {
-            if (!this.props.loggedIn) {
-                Cookies.remove('apiKey');
-                Router.push('/login');
+            console.log(ctx.loggedIn);
+            if (!ctx.loggedIn) {
+                if (ctx.req) { // server
+                    ctx.res.writeHead(302, { Location: '/login' });
+                    ctx.res.end();
+                } else {
+                    Cookies.remove('apiKey');
+                    Router.push('/login');
+                }
             }
+
+            return { pageProps };
         }
 
         public render() {
