@@ -12,13 +12,13 @@ import { Card, CardBody, CardHeader } from 'reactstrap';
 import { bindActionCreators, Dispatch } from 'redux';
 import { Field, FormErrors, InjectedFormProps, reduxForm } from 'redux-form';
 
-interface IPageLoginDispatchProps {
+interface IPageLoginDispatch {
     removeCurrentUser: typeof removeCurrentUser;
     setCurrentUser: typeof setCurrentUser;
     setLoggedIn: typeof setLoggedIn;
 }
 
-interface IPageLoginProps<FormData> extends InjectedFormProps<FormData>, IPageLoginDispatchProps {}
+interface IPageLoginProps<FormData> extends InjectedFormProps<FormData>, IPageLoginDispatch {}
 
 interface ILoginForm {
     email: string;
@@ -155,4 +155,4 @@ const mapDispatchToProps = (dispatch: Dispatch<IStoreState>) =>
         dispatch,
     );
 
-export default connect(mapStateToProps, mapDispatchToProps)(PageLoginReduxForm);
+export default connect<any, IPageLoginDispatch, IPageLoginProps<FormData>>(mapStateToProps, mapDispatchToProps)(PageLoginReduxForm);

@@ -7,7 +7,7 @@ const DEFAULT_INTERNAL_API_BASE_URL = 'http://kong-proxy.kong';
 const ANONYMOUS_API_KEY = 'anonymous';
 
 /**
- * 서버와 브라우져에서 fetch를 호출할 때 도메인 주소를 따로 설정함
+ * Set internal api url when fetch from server(not browser)
  * @param req request
  */
 const getBaseUrl = (req?: IncomingMessage) => {
