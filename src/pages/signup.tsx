@@ -1,7 +1,7 @@
 import { client } from '@common/client';
 import LayoutEmpty from '@layouts/empty';
 import { SIGNUP_REDUX_FORM } from '@redux/signup';
-import { removeCurrentUser, setCurrentUser, setLoggedIn } from '@redux/store';
+import { IStoreState, removeCurrentUser, setCurrentUser, setLoggedIn } from '@redux/store';
 import { PanelHeader } from '@shared/now-ui-components';
 import * as Cookies from 'js-cookie';
 import Link from 'next/link';
@@ -10,9 +10,15 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Card, CardBody, CardHeader } from 'reactstrap';
 import { bindActionCreators, Dispatch } from 'redux';
-import { Field, InjectedFormProps, reduxForm } from 'redux-form';
+import { Field, FormErrors, InjectedFormProps, reduxForm } from 'redux-form';
 
-interface IPageSignupProps <FormData> extends InjectedFormProps<FormData> {}
+interface IPageSingupDispatchProps {
+    removeCurrentUser: typeof removeCurrentUser;
+    setCurrentUser: typeof setCurrentUser;
+    setLoggedIn: typeof setLoggedIn;
+}
+
+interface IPageSignupProps<FormData> extends InjectedFormProps<FormData>, IPageSingupDispatchProps {}
 
 interface ISignupForm {
     email: string;
@@ -90,7 +96,7 @@ class PageSignup extends React.Component<IPageSignupProps<ISignupForm>, {}> {
 }
 
 const validate = (val: ISignupForm) => {
-    const errors: any = {};
+    const errors: FormErrors<ISignupForm> = {};
 
     if (!val.email) {
         errors.email = 'Email is required.';
@@ -103,7 +109,7 @@ const validate = (val: ISignupForm) => {
     return errors;
 };
 
-const onSubmit = async (val: ISignForm, dispatch: Dispatch<any>, props: any) => {
+const onSubmit = async (val: ISignupForm, dispatch: Dispatch<IStoreState>, props: IPageSignupProps<ISignupForm>) => {
     try {
         const result = (await client().post(`/user-service/v1/signup`, val));
         if (result.data.key) {
@@ -129,9 +135,9 @@ const PageSignupReduxForm = reduxForm({
     onSubmit,
 })(PageSignup);
 
-const mapStateToProps = (state: any) => ({});
+const mapStateToProps = (state: {}) => ({});
 
-const mapDispatchToProps = (dispatch: Dispatch<any>) =>
+const mapDispatchToProps = (dispatch: Dispatch<IStoreState>) =>
     bindActionCreators(
         {
             removeCurrentUser,

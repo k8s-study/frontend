@@ -1,7 +1,7 @@
 import { client } from '@common/client';
 import LayoutEmpty from '@layouts/empty';
 import { LOGIN_REDUX_FORM } from '@redux/login';
-import { removeCurrentUser, setCurrentUser, setLoggedIn } from '@redux/store';
+import { IStoreState, removeCurrentUser, setCurrentUser, setLoggedIn } from '@redux/store';
 import { PanelHeader } from '@shared/now-ui-components';
 import * as Cookies from 'js-cookie';
 import Link from 'next/link';
@@ -10,9 +10,15 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Card, CardBody, CardHeader } from 'reactstrap';
 import { bindActionCreators, Dispatch } from 'redux';
-import { Field, InjectedFormProps, reduxForm } from 'redux-form';
+import { Field, FormErrors, InjectedFormProps, reduxForm } from 'redux-form';
 
-interface IPageLoginProps <FormData> extends InjectedFormProps<FormData> {}
+interface IPageLoginDispatchProps {
+    removeCurrentUser: typeof removeCurrentUser;
+    setCurrentUser: typeof setCurrentUser;
+    setLoggedIn: typeof setLoggedIn;
+}
+
+interface IPageLoginProps<FormData> extends InjectedFormProps<FormData>, IPageLoginDispatchProps {}
 
 interface ILoginForm {
     email: string;
@@ -94,7 +100,7 @@ class PageLogin extends React.Component<IPageLoginProps<ILoginForm>, {}> {
 }
 
 const validate = (val: ILoginForm) => {
-    const errors: any = {};
+    const errors: FormErrors<ILoginForm> = {};
 
     if (!val.email) {
         errors.email = 'Email is required.';
@@ -107,7 +113,7 @@ const validate = (val: ILoginForm) => {
     return errors;
 };
 
-const onSubmit = async (val: ILoginForm, dispatch: Dispatch<any>, props: any) => {
+const onSubmit = async (val: ILoginForm, dispatch: Dispatch<IStoreState>, props: IPageLoginProps<ILoginForm>) => {
     try {
         const result = (await client().post(`/user-service/v1/login`, val));
         if (result.data.key) {
@@ -123,19 +129,23 @@ const onSubmit = async (val: ILoginForm, dispatch: Dispatch<any>, props: any) =>
     } catch (e) {
         props.setLoggedIn(false);
         props.removeCurrentUser();
-        alert(e.response.data.message);
+        if (e.response && e.reponse.data) {
+            alert(e.response.data.message || e.message || 'Unknown error occur!');
+        } else {
+            alert(e.message || 'Unknown error occur!');
+        }
     }
 };
 
-const PageLoginReduxForm = reduxForm({
+const PageLoginReduxForm = reduxForm<ILoginForm>({
     form: LOGIN_REDUX_FORM,
     validate,
     onSubmit,
 })(PageLogin);
 
-const mapStateToProps = (state: any) => ({});
+const mapStateToProps = (state: {}) => ({});
 
-const mapDispatchToProps = (dispatch: Dispatch<any>) =>
+const mapDispatchToProps = (dispatch: Dispatch<IStoreState>) =>
     bindActionCreators(
         {
             removeCurrentUser,

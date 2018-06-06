@@ -1,8 +1,14 @@
 import { ICurrentUser } from '@common/types';
 import { applyMiddleware, combineReducers, createStore, Dispatch } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { reducer as formReducer } from 'redux-form';
+import { FormReducer, reducer as formReducer } from 'redux-form';
 import thunkMiddleware from 'redux-thunk';
+
+export interface IStoreState {
+    form: FormReducer;
+    loggedIn: boolean;
+    currentUser: ICurrentUser;
+}
 
 const defaultInitialState = {
     loggedIn: false,
@@ -43,7 +49,7 @@ const currentUserReducer = (state: object | null = null, action?: any) => {
 };
 
 // ACTIONS
-export const setLoggedIn = (loggedIn: boolean) => (dispatch: Dispatch<any>) => {
+export const setLoggedIn = (loggedIn: boolean) => (dispatch: Dispatch<IStoreState>) => {
     return dispatch({
         type: actionTypes.SET_LOGGED_IN,
         payload: {
@@ -52,7 +58,7 @@ export const setLoggedIn = (loggedIn: boolean) => (dispatch: Dispatch<any>) => {
     });
 };
 
-export const setCurrentUser = (currentUser: ICurrentUser) => (dispatch: Dispatch<any>) => {
+export const setCurrentUser = (currentUser: ICurrentUser) => (dispatch: Dispatch<IStoreState>) => {
     return dispatch({
         type: actionTypes.SET_CURRENT_USER,
         payload: {
@@ -61,7 +67,7 @@ export const setCurrentUser = (currentUser: ICurrentUser) => (dispatch: Dispatch
     });
 };
 
-export const removeCurrentUser = () => (dispatch: Dispatch<any>) => {
+export const removeCurrentUser = () => (dispatch: Dispatch<IStoreState>) => {
     return dispatch({
         type: actionTypes.REMOVE_CURRENT_USER,
     });

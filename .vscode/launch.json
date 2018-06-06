@@ -1,0 +1,35 @@
+{
+    "version": "0.1.0",
+    "configurations": [
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Next: Chrome",
+            "url": "http://localhost:3000/",
+            "webRoot": "${workspaceFolder}/src",
+            "skipFiles": [
+                "node_modules/*",
+                "react-dom*.js"
+            ],
+            "disableNetworkCache": true
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Next: Node",
+            "runtimeExecutable": "node",
+            "runtimeArgs": [
+                "--inspect",
+                "server.js"
+            ],
+            "port": 9229,
+            "console": "integratedTerminal"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Next: Full",
+            "configurations": ["Next: Node", "Next: Chrome"]
+        }
+    ]
+}

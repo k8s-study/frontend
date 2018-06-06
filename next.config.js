@@ -33,6 +33,7 @@ module.exports = withCSS(withSass(withTypescript({
         });
 
         if (dev) {
+            config.devtool = 'cheap-module-source-map';
             config.module.rules.push({
                 test: /\.(ts|tsx)$/,
                 loader: 'tslint-loader'

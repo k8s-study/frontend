@@ -42,7 +42,7 @@
     "@types/react-redux": "^5.0.15",
     "@types/reactstrap": "^5.0.20",
     "@types/redux": "^3.6.0",
-    "@types/redux-form": "^7.2.5",
+    "@types/redux-form": "^7.2.6",
     "tslint": "^5.9.1",
     "tslint-config-airbnb": "^5.8.0",
     "tslint-loader": "^3.6.0",

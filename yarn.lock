@@ -691,9 +691,9 @@
   dependencies:
     "@types/react" "*"
 
-"@types/redux-form@^7.2.5":
-  version "7.2.5"
-  resolved "https://registry.yarnpkg.com/@types/redux-form/-/redux-form-7.2.5.tgz#26faf46106805fc4601395420f1d5bbab7469c4b"
+"@types/redux-form@^7.2.6":
+  version "7.2.6"
+  resolved "https://registry.yarnpkg.com/@types/redux-form/-/redux-form-7.2.6.tgz#442cdf28b1626a0693202766be2edafc5300b6a5"
   dependencies:
     "@types/react" "*"
     redux "^3.6.0"

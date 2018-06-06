@@ -21,7 +21,6 @@ export const withAuth = (WrappedComponent: React.ComponentType & INextComponentT
                 pageProps = await WrappedComponent.getInitialProps(ctx);
             }
 
-            console.log(ctx.loggedIn);
             if (!ctx.loggedIn) {
                 if (ctx.req) { // server
                     ctx.res.writeHead(302, { Location: '/login' });

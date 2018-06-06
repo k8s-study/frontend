@@ -1,16 +1,17 @@
 import { ICurrentUser } from '@common/types';
 import LayoutDefault from '@layouts/default';
+import { IStoreState } from '@redux/store';
 import { PanelHeader } from '@shared/now-ui-components';
 import { IAuthProps, withAuth } from '@util/with-auth';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Card, CardHeader, Col, Row } from 'reactstrap';
 
-interface IPageProfile extends IAuthProps {
+interface IPageProfileProps extends IAuthProps {
     currentUser: ICurrentUser;
 }
 
-class PageProfile extends React.Component<IPageProfile, {}> {
+class PageProfile extends React.Component<IPageProfileProps, {}> {
     public render() {
         return (
             <LayoutDefault title="pongpong | Profile">
@@ -31,7 +32,7 @@ class PageProfile extends React.Component<IPageProfile, {}> {
     }
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: IStoreState) => ({
     currentUser: state.currentUser,
 });
 
